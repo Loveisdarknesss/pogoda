@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Погодка на каждый день</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        /* Дополнительные стили */
+        body {
+            background-color: #f0f0f0; /* Цвет фона */
+        }
+
+        .container {
+            background-color: #ffffff; /* Цвет фона контейнера */
+            padding: 20px;
+            border-radius: 10px; /* Закругленные углы */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Тень */
+        }
+
+        /* Стили для заголовков */
+        h1 {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333; /* Цвет текста */
+        }
+
+        /* Стили для кнопок */
+        .btn-danger {
+            background-color: #ff6347; /* Цвет кнопки */
+            border: none;
+            color: #fff; /* Цвет текста на кнопке */
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn-danger:hover {
+            background-color: #ff503a; /* Цвет кнопки при наведении */
+        }
+
+        /* Стили для алертов */
+        .alert {
+            border-radius: 5px;
+            padding: 10px;
+            margin-top: 20px;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <title>Погодка на каждый день</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-4 mb-3 bg-white border-bottom shadow-sm">
+        <h5 class="my-0 mr-md-auto font-weight-normal">PogodkaOK</h5>
+        <nav class="my-2 my-md-0 mr-md-3">
+            <a class="p-2 text-dark" href="#">Главная страница</a>
+            <a class="p-2 text-dark" href="#">Информация</a>
+        </nav>
+        <a class="btn btn-outline-primary" href="#">Документация</a>
+    </div>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-5">
+                <h1>Выберите город</h1>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <label for="city">Город</label>
+                    {{ form.name }}
+                    <input type="submit" name="send" value="Узнать" class="mt-2 btn btn-danger">
+                </form>
+            </div>
+            <div class="col-5 offset-2">
+                <h1>Информация</h1>
+                {% for info in all_info %}
+                <div class="alert alert-info">
+                    <div class="row">
+                        <div class="col-5 offset-2">
+                            <b>Город:</b> {{ info.city }}<br>
+                            <b>Температура:</b> {{ info.temp }}<br>
+                            <b>Ветер</b> {{ info.wind }}<br>
+                            <b>Давление</b> {{ info.pressure }}<br>
+
+                        </div>
+                        <div class="col-4 offset-1">
+                            <img src="http://openweathermap.org/img/w/{{ info.icon }}.png" alt="Фото погоды" class="img-thumbnail">
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
